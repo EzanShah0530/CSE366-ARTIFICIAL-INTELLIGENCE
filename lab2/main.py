@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 import random
 from controller.PriceMonitoringController import pricemonitoringcontroller
 from controller.InventoryMonitoringController import inventorymonitorcontroller
