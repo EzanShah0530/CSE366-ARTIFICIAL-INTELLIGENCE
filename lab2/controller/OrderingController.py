@@ -1,6 +1,6 @@
 def decideorderquantitycontroller(current_price, stock_level, average_price, critical_stock_level=10, min_order_quantity=10, discount_threshold=0.2):
 
-    threshold_price = average_price * (1 - discount_threshold)
+    threshold_price = average_price * (1 - discount_threshold) 
     
     is_discounted = current_price <= threshold_price
     
