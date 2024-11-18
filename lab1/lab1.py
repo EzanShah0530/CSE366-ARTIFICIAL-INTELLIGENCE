@@ -1,4 +1,5 @@
-import random,os
+import random
+import os
 
 class StudentID:
     
