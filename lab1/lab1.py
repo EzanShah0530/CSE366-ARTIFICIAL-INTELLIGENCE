@@ -1,6 +1,5 @@
 import random
 import os
-
 class StudentID:
     
     def __init__(self,path):
