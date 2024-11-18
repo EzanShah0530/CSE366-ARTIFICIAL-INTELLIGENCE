@@ -14,4 +14,4 @@ def decideorderquantitycontroller(current_price, stock_level, average_price, cri
     elif is_stock_critical:
         return min_order_quantity  
     
-    return 0  
+    return 0

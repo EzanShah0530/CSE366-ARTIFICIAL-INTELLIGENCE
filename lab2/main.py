@@ -4,6 +4,7 @@ from controller.PriceMonitoringController import pricemonitoringcontroller
 from controller.InventoryMonitoringController import inventorymonitorcontroller
 from controller.OrderingController import decideorderquantitycontroller
 
+
 class SmartphoneInventoryAgent:
     def __init__(self, average_price, min_order_quantity=10, discount_threshold=0.2, critical_stock_level=10):
         self.average_price = average_price
