@@ -1,5 +1,5 @@
-import random
-import os
+import random,os
+
 class StudentID:
     
     def __init__(self,path):
