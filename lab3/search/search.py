@@ -74,12 +74,16 @@ def tinyMazeSearch(problem):
 
 def depthFirstSearch(problem):
     from util import Stack
+    import time
+    
+    s_time = time.time()
+    
     stack = Stack()
-    stack.push((problem.getStartState(),[]))
+    stack.push((problem.getStartState(), []))  # Stack stores tuples of (state, actions)
     visited = set()
     
     while not stack.isEmpty():
-        state,actions, = stack.pop()
+        state, actions = stack.pop()
         
         if state in visited:
             continue
@@ -87,67 +91,82 @@ def depthFirstSearch(problem):
         visited.add(state)
         
         if problem.isGoalState(state):
+            e_time = time.time()
+            total_time = e_time - s_time
+            print(f"DFS Search took {total_time:.6f} seconds.")
+            print(f"Path found with total cost of {len(actions)} in {total_time:.6f} seconds.")
             return actions
         
-        
-        for successor , action, stepCost in problem.getSuccessors(state):
+        for successor, action, stepCost in problem.getSuccessors(state):
             if successor not in visited:
                 stack.push((successor, actions + [action]))
-            
+    
+    print("No solution found.")
     return []
+
     
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    #util.raiseNotDefined()
-    """ Search the shallowest nodes in the search tree first. """
-    currPath = []           # The path that is popped from the frontier in each loop
-    currState =  problem.getStartState()    # The state(position) that is popped for the frontier in each loop
-    print(f"currState: {currState}")
-    if problem.isGoalState(currState):     # Checking if the start state is also a goal state
-        return currPath
+    from util import Queue
+    import time
 
+    s_time = time.time()
+    
     frontier = Queue()
-    frontier.push( (currState, currPath) )     # Insert just the start state, in order to pop it first
+    frontier.push((problem.getStartState(), [])) 
+    
     explored = set()
+    
     while not frontier.isEmpty():
-        currState, currPath = frontier.pop()    # Popping a state and the corresponding path
-        # To pass autograder.py question2:
+        currState, currPath = frontier.pop()
+        
         if problem.isGoalState(currState):
+            e_time = time.time()
+            total_time = e_time - s_time
+            print(f"BFS Search took {total_time:.6f} seconds.")
+            print(f"Path found with total cost of {len(currPath)} in {total_time:.6f} seconds.")
             return currPath
-        explored.add(currState)
-        frontierStates = [ t[0] for t in frontier.list ]
-        for s in problem.getSuccessors(currState):
-            if s[0] not in explored and s[0] not in frontierStates:
-                # Lecture code:
-                # if problem.isGoalState(s[0]):
-                #     return currPath + [s[1]]
-                frontier.push( (s[0], currPath + [s[1]]) )      # Adding the successor and its path to the frontier
-
-    return []       # If this point is reached, a solution could not be found.
+        
+        if currState not in explored:
+            explored.add(currState)
+            
+            for successor, action, stepCost in problem.getSuccessors(currState):
+                if successor not in explored:
+                    frontier.push((successor, currPath + [action]))
+    
+    print("No solution found.")
+    return []
 
 def uniformCostSearch(problem):
     from util import PriorityQueue
+    import time
+    
+    s_time = time.time()
     pq = PriorityQueue()
     pq.push((problem.getStartState(), []), 0) 
     visited = {}
-
+    
     while not pq.isEmpty():
         state, actions = pq.pop()
-
+        
         if state in visited and visited[state] <= problem.getCostOfActions(actions):
             continue
-
+        
         visited[state] = problem.getCostOfActions(actions)
-
+        
         if problem.isGoalState(state):
+            e_time = time.time()
+            total_time = e_time - s_time
+            print(f"UCS Search took {total_time:.6f} seconds.")
+            print(f"Path found with total cost of {len(actions)} in {total_time:.6f} seconds.")
             return actions
-
+        
         for successor, action, stepCost in problem.getSuccessors(state):
             newActions = actions + [action]
             cost = problem.getCostOfActions(newActions)
             pq.push((successor, newActions), cost)
-
+    
+    print("No solution found.")
     return []
     
 
